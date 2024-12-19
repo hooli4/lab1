@@ -5,28 +5,29 @@ on:
     branches: [ "main" ]
 
 jobs:
-  Build:
-    runs-on: ubuntu-latest
+ test:
+    name: build and test code
+    runs-on: ubuntu-latest  
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install .NET Core
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.0.x
-
-  Test:
-      runs-on: ubuntu-latest
-      steps:
-      - name: Restore dependencies
-        run: dotnet restore ./ConsoleApp6/ConsoleApp6.sln
-
-      - name: Build
-        run: dotnet build ./ConsoleApp6/ConsoleApp6.sln --no-restore
+    
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+        
+    - name: Restore dependencies
+      run: dotnet restore ./ConsoleApp6/ConsoleApp6.sln
       
-      - name: Execute unit tests
-        run: dotnet test ./ConsoleApp6/TestProject1/TestProject1.csproj --no-build --verbosity normal
+    - name: Build
+      run: dotnet build ./ConsoleApp6/ConsoleApp6.sln --no-restore
+      
+    - name: Execute unit tests
+      run: dotnet test ./ConsoleApp6/TestProject1/TestProject1.csproj --no-build --verbosity normal
+      
 
